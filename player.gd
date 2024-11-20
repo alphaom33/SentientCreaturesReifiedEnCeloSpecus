@@ -12,7 +12,7 @@ var skyMove = 2000
 var maxAir = Vector2(500, 1000)
 var airDrag = 1
 
-var jump = 27000
+var jump = 30000
 var jump_timer_max = 0.35
 var jump_timer = jump_timer_max
 
@@ -25,15 +25,14 @@ var offset = Vector2(50, 0)
 var sword: PackedScene
 signal newSword(sign, off, rot)
 var swording = false
-
-var crouch: PackedScene
+var sword_offset = 50
+var sword_wait = 0.1
 
 var sprite: Sprite2D
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	onGround()
-	crouch = load("res://crouch.tscn")
 	sword = load("res://sword.tscn")
 	sprite = $"Sprite2D"
 
@@ -47,7 +46,9 @@ func _physics_process(delta):
 		airMove()
 
 	if not swording:
-		joinp(delta)
+		fence()
+
+	joinp(delta)
 
 	if linear_velocity.y > 0:
 		if Input.is_action_pressed("jump"):
@@ -78,10 +79,10 @@ func leave(area):
 		kill()
 
 func groundMove():
-	if Input.is_action_pressed("move_left") and not swording:
+	if Input.is_action_pressed("move_left"):
 		apply_central_force(Vector2.LEFT * horizonZeroSpeed)
 		sprite.scale.x = -0.65
-	elif Input.is_action_pressed("move_right") and not swording:
+	elif Input.is_action_pressed("move_right"):
 		apply_central_force(Vector2.RIGHT * horizonZeroSpeed)
 		sprite.scale.x = 0.65
 	apply_central_force(Vector2(-linear_velocity.x * negatSpeed, 0))
@@ -89,12 +90,6 @@ func groundMove():
 	var dir = clamp(sign(sprite.scale.x), 0, 1)
 	linear_velocity.x = clamp(linear_velocity.x, (1 - dir) * -maxHorizonSpeed, dir * maxHorizonSpeed)
 	
-	if Input.is_action_pressed("crouch"):
-		var newMe = crouch.instantiate()
-		get_parent().add_child(newMe)
-		get_parent().get_node("Crouch").position = position + Vector2(0, 25)
-		queue_free()
-
 func airMove():
 	if Input.is_action_pressed("move_left") and linear_velocity.x > -maxAir.x:
 		apply_central_force(Vector2.LEFT * skyMove)
@@ -103,8 +98,17 @@ func airMove():
 	else:
 		apply_central_force(Vector2(-linear_velocity.x * airDrag, 0))
 
+func fence():
+	if Input.is_action_pressed("sword"):
+		var new = sword.instantiate();
+		add_child(new)
+		new.position.x = sign(sprite.scale.x) * sword_offset
+		new.scale.x = sign(sprite.scale.x)
+		swording = true
+
+		new.connect("died", no_sword)
+
 func joinp(delta):
-	print(jump_timer)
 	if Input.is_action_pressed("jump") and jump_timer > 0:
 			numJumps -= 1
 			linear_velocity = Vector2(linear_velocity.x, clamp(linear_velocity.y, 0, float('inf')))
@@ -115,6 +119,13 @@ func speedReset():
 	maxHorizonSpeed = 500
 	swording = false
 	negatSpeed = 13
+
+func no_sword():
+	var timer = Timer.new()
+	timer.wait_time = sword_wait
+	timer.autostart = true
+	timer.connect("timeout", func():
+		swording = false)
 
 func kill():
 	pass
