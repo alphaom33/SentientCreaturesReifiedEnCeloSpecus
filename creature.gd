@@ -2,13 +2,13 @@ extends Node2D
 
 var velocity = Vector2()
 var max_speed = 5
+var acceleration = 10
 
 var change_point = 10
 var current_pos: Vector2
-var max_dst = 0
+var max_dst: Vector2
+var margin = 10
 var change_speed = 1
-
-var toward_point_weight = 40
 
 var timi: Timer
 
@@ -25,7 +25,7 @@ func limit_speed(vel: Vector2):
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	max_dst = get_viewport_rect().size / 2 + Vector2(50, 50)
+	max_dst = get_viewport_rect().size / 2 + Vector2(margin, margin)
 	random_screen_point()
 
 	timi = $"Timer"
@@ -35,7 +35,7 @@ func _ready() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	velocity += toward_point() * toward_point_weight * delta
+	velocity += toward_point() * delta * acceleration
 	velocity = limit_speed(velocity)
 	position += velocity
 
