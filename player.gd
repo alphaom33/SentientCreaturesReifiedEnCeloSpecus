@@ -12,7 +12,7 @@ var skyMove = 2000
 var maxAir = Vector2(500, 1000)
 var airDrag = 1
 
-var jump = 30000
+var jump = 25000
 var jump_timer_max = 0.35
 var jump_timer = jump_timer_max
 
@@ -23,10 +23,9 @@ signal ground(newGround);
 var offset = Vector2(50, 0)
 
 var sword: PackedScene
-signal newSword(sign, off, rot)
 var swording = false
 var sword_offset = 50
-var sword_wait = 0.1
+var sword_wait = 0.25
 
 var sprite: Sprite2D
 
@@ -122,9 +121,10 @@ func speedReset():
 
 func no_sword():
 	var timer = Timer.new()
-	timer.wait_time = sword_wait
-	timer.autostart = true
+	add_child(timer)
+	timer.start(sword_wait)
 	timer.connect("timeout", func():
+		timer.queue_free()
 		swording = false)
 
 func kill():
