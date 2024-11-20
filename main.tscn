@@ -1,9 +1,17 @@
-[gd_scene load_steps=3 format=3 uid="uid://yqdirxejmduk"]
+[gd_scene load_steps=6 format=3 uid="uid://yqdirxejmduk"]
 
+[ext_resource type="Texture2D" uid="uid://npg60ehoklq0" path="res://icon.svg" id="1_02kkc"]
 [ext_resource type="PackedScene" uid="uid://h0bf7a638rpw" path="res://player.tscn" id="1_gh4b4"]
 [ext_resource type="PackedScene" uid="uid://c1thbbm5yumsl" path="res://Platform.tscn" id="2_8i67g"]
+[ext_resource type="PackedScene" uid="uid://2063k0v5t78x" path="res://creature.tscn" id="4_y2egx"]
+[ext_resource type="Script" path="res://creature.gd" id="5_f8qjk"]
 
 [node name="Main" type="Node2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(182, 134)
+scale = Vector2(22.7355, 10.3197)
+texture = ExtResource("1_02kkc")
 
 [node name="Player" parent="." instance=ExtResource("1_gh4b4")]
 position = Vector2(382, 139)
@@ -11,3 +19,44 @@ position = Vector2(382, 139)
 [node name="Platform" parent="." instance=ExtResource("2_8i67g")]
 position = Vector2(450, 595)
 scale = Vector2(1.37735, 1.84)
+
+[node name="CanvasModulate" type="CanvasModulate" parent="."]
+color = Color(0, 0, 0, 1)
+
+[node name="BasicCreature" parent="." node_paths=PackedStringArray("camera") instance=ExtResource("4_y2egx")]
+position = Vector2(174, 277)
+script = ExtResource("5_f8qjk")
+camera = NodePath("../Camera2D")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(575, 321)
+
+[node name="BasicCreature2" parent="." node_paths=PackedStringArray("camera") instance=ExtResource("4_y2egx")]
+position = Vector2(174, 277)
+script = ExtResource("5_f8qjk")
+camera = NodePath("../Camera2D")
+
+[node name="BasicCreature3" parent="." node_paths=PackedStringArray("camera") instance=ExtResource("4_y2egx")]
+position = Vector2(174, 277)
+script = ExtResource("5_f8qjk")
+camera = NodePath("../Camera2D")
+
+[node name="BasicCreature4" parent="." node_paths=PackedStringArray("camera") instance=ExtResource("4_y2egx")]
+position = Vector2(174, 277)
+script = ExtResource("5_f8qjk")
+camera = NodePath("../Camera2D")
+
+[node name="BasicCreature5" parent="." node_paths=PackedStringArray("camera") instance=ExtResource("4_y2egx")]
+position = Vector2(174, 277)
+script = ExtResource("5_f8qjk")
+camera = NodePath("../Camera2D")
+
+[node name="BasicCreature6" parent="." node_paths=PackedStringArray("camera") instance=ExtResource("4_y2egx")]
+position = Vector2(174, 277)
+script = ExtResource("5_f8qjk")
+camera = NodePath("../Camera2D")
+
+[node name="BasicCreature7" parent="." node_paths=PackedStringArray("camera") instance=ExtResource("4_y2egx")]
+position = Vector2(174, 277)
+script = ExtResource("5_f8qjk")
+camera = NodePath("../Camera2D")
