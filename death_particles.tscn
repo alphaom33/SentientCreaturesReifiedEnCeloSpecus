@@ -1,0 +1,19 @@
+[gd_scene load_steps=3 format=3 uid="uid://d1g88fcomxqd0"]
+
+[ext_resource type="Texture2D" uid="uid://npg60ehoklq0" path="res://icon.svg" id="1_ksma2"]
+[ext_resource type="Script" path="res://death_particles.gd" id="2_1v6fy"]
+
+[node name="CPUParticles2D" type="CPUParticles2D"]
+amount = 10
+lifetime = 3.0
+explosiveness = 0.95
+texture = ExtResource("1_ksma2")
+direction = Vector2(0, -1)
+spread = 100.0
+gravity = Vector2(0, 400)
+initial_velocity_min = 150.0
+initial_velocity_max = 250.0
+angular_velocity_max = 130.91
+scale_amount_min = 0.2
+scale_amount_max = 0.4
+script = ExtResource("2_1v6fy")

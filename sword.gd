@@ -1,5 +1,7 @@
 extends Node2D
 
+var damage = 1
+
 var timi: Timer
 var count_down: float = 0.1
 var angle: float = 60
@@ -16,6 +18,7 @@ func _ready():
 	timi.start(count_down)
 
 	child = $"Node2D"
+	child.get_node("Area2D").connect("area_entered", hit)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):
@@ -24,6 +27,9 @@ func _process(_delta):
 		queue_free()
 	else:
 		rotation_degrees = lerp(scale.x * angle, -scale.x * angle, timi.time_left / count_down)
+
+func hit(area: Area2D):
+	area.get_parent().damage(damage)
 
 func lerp(a, b, t):
 	return a + (b - a) * t

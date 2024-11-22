@@ -1,5 +1,7 @@
 extends Node2D
 
+var health = 1
+
 var velocity = Vector2()
 var max_speed = 5
 var acceleration = 10
@@ -12,7 +14,9 @@ var change_speed = 1
 
 var timi: Timer
 
-@export var camera: Camera2D
+var camera: Camera2D
+
+var death_particles: PackedScene
 
 func toward_point():
 	return (current_pos - position).normalized()
@@ -25,6 +29,8 @@ func limit_speed(vel: Vector2):
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	camera = get_tree().root.get_child(0).get_node("Camera2D")
+
 	max_dst = get_viewport_rect().size / 2 + Vector2(margin, margin)
 	random_screen_point()
 
@@ -32,6 +38,8 @@ func _ready() -> void:
 	timi.stop()
 	timi.start(change_speed)
 	timi.connect("timeout", random_screen_point)
+
+	death_particles = load("res://death_particles.tscn")
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
@@ -45,3 +53,9 @@ func _process(delta: float) -> void:
 
 func random_screen_point():
 	current_pos = camera.position + (Vector2(randf() * 2 - 1, randf() * 2 - 1) * max_dst)
+
+func damage(_amount):
+	var thing = death_particles.instantiate()
+	thing.position = position
+	get_node("/root").add_child(thing)
+	queue_free()

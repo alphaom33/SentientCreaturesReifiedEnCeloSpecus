@@ -98,7 +98,7 @@ func airMove():
 		apply_central_force(Vector2(-linear_velocity.x * airDrag, 0))
 
 func fence():
-	if Input.is_action_pressed("sword"):
+	if Input.is_action_just_pressed("sword"):
 		var new = sword.instantiate();
 		add_child(new)
 		new.position.x = sign(sprite.scale.x) * sword_offset
@@ -120,12 +120,8 @@ func speedReset():
 	negatSpeed = 13
 
 func no_sword():
-	var timer = Timer.new()
-	add_child(timer)
-	timer.start(sword_wait)
-	timer.connect("timeout", func():
-		timer.queue_free()
-		swording = false)
+	await get_tree().create_timer(sword_wait).timeout
+	swording = false
 
 func kill():
 	pass
