@@ -1,9 +1,11 @@
-[gd_scene load_steps=5 format=3 uid="uid://yqdirxejmduk"]
+[gd_scene load_steps=7 format=3 uid="uid://yqdirxejmduk"]
 
 [ext_resource type="Texture2D" uid="uid://npg60ehoklq0" path="res://icon.svg" id="1_02kkc"]
 [ext_resource type="PackedScene" uid="uid://h0bf7a638rpw" path="res://player.tscn" id="1_gh4b4"]
 [ext_resource type="PackedScene" uid="uid://c1thbbm5yumsl" path="res://Platform.tscn" id="2_8i67g"]
 [ext_resource type="PackedScene" uid="uid://2063k0v5t78x" path="res://creature.tscn" id="4_y2egx"]
+[ext_resource type="Script" path="res://spider.gd" id="5_t8jbu"]
+[ext_resource type="Texture2D" uid="uid://8h5l7qvjsoio" path="res://Circle.tres" id="6_1bdk1"]
 
 [node name="Main" type="Node2D"]
 
@@ -28,32 +30,14 @@ position = Vector2(575, 321)
 [node name="BasicCreature" parent="." instance=ExtResource("4_y2egx")]
 position = Vector2(529, 283)
 
-[node name="BasicCreature2" parent="." instance=ExtResource("4_y2egx")]
-position = Vector2(529, 283)
+[node name="Spider" type="Node2D" parent="."]
+position = Vector2(415, 318)
+script = ExtResource("5_t8jbu")
 
-[node name="BasicCreature3" parent="." instance=ExtResource("4_y2egx")]
-position = Vector2(529, 283)
+[node name="PointLight2D" type="PointLight2D" parent="Spider"]
+scale = Vector2(4, 4)
+color = Color(1, 0.172549, 0.184314, 1)
+energy = 2.87
+texture = ExtResource("6_1bdk1")
 
-[node name="BasicCreature4" parent="." instance=ExtResource("4_y2egx")]
-position = Vector2(529, 283)
-
-[node name="BasicCreature5" parent="." instance=ExtResource("4_y2egx")]
-position = Vector2(529, 283)
-
-[node name="BasicCreature6" parent="." instance=ExtResource("4_y2egx")]
-position = Vector2(529, 283)
-
-[node name="BasicCreature7" parent="." instance=ExtResource("4_y2egx")]
-position = Vector2(529, 283)
-
-[node name="BasicCreature8" parent="." instance=ExtResource("4_y2egx")]
-position = Vector2(529, 283)
-
-[node name="BasicCreature9" parent="." instance=ExtResource("4_y2egx")]
-position = Vector2(529, 283)
-
-[node name="BasicCreature10" parent="." instance=ExtResource("4_y2egx")]
-position = Vector2(529, 283)
-
-[node name="BasicCreature11" parent="." instance=ExtResource("4_y2egx")]
-position = Vector2(529, 283)
+[node name="ReadyTimer" type="Timer" parent="Spider"]
