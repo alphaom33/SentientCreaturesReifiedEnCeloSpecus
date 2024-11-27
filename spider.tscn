@@ -1,0 +1,21 @@
+[gd_scene load_steps=4 format=3 uid="uid://4ybvr5y4veyo"]
+
+[ext_resource type="Script" path="res://spider.gd" id="1_gdqc7"]
+[ext_resource type="Script" path="res://spider_body.gd" id="2_8w0j1"]
+[ext_resource type="Texture2D" uid="uid://8h5l7qvjsoio" path="res://Circle.tres" id="2_x532f"]
+
+[node name="Spider" type="Node2D"]
+script = ExtResource("1_gdqc7")
+
+[node name="SpiderBody" type="Node2D" parent="."]
+scale = Vector2(4, 4)
+script = ExtResource("2_8w0j1")
+
+[node name="PointLight2D" type="PointLight2D" parent="SpiderBody"]
+color = Color(1, 0.172549, 0.184314, 1)
+energy = 3.0
+texture = ExtResource("2_x532f")
+
+[node name="ReadyTimer" type="Timer" parent="SpiderBody"]
+
+[node name="RayCast2D" type="RayCast2D" parent="."]
