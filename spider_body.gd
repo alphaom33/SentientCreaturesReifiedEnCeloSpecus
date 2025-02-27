@@ -14,6 +14,8 @@ var max_surge_timer = 1
 var surge_timer = 0
 var surge_speed = 600
 
+var dst
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	player = get_tree().root.get_child(0).get_node("Player")
@@ -25,7 +27,7 @@ func _ready() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	var dst = player.position - position
+	dst = player.position - position
 
 	if (dst.length() > minDst):
 		position += dst.normalized() * delta * speed
